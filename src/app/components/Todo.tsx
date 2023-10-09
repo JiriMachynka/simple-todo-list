@@ -1,8 +1,8 @@
 "use client";
 
 import { clsxov as clsx } from "clsxov";
-import { TTodo } from "../actions/todo";
 import { PenSquare, Trash } from "lucide-react";
+import { TTodo } from "../types/types";
 
 type TodoProps = TTodo & {
   handleState: (id: string) => void;
@@ -10,7 +10,7 @@ type TodoProps = TTodo & {
   handleDelete: (id: string) => void;
 };
 
-const TodoComponent = ({
+export const TodoComponent = ({
   id,
   name,
   description,
@@ -57,4 +57,3 @@ const TodoComponent = ({
     </div>
   )
 }
-export default TodoComponent;

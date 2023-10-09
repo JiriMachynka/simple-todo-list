@@ -1,10 +1,11 @@
 "use client";
 
 import { useFormik } from "formik";
-import { Todo, TTodo } from "./actions/todo";
-import { useState } from "react";
-import TodoComponent from "./components/Todo";
+import { Todo } from "./actions/todo";
+import { useEffect, useState } from "react";
+import { TodoComponent } from "./components/Todo";
 import * as Yup from "yup";
+import { TTodo } from "./types/types";
 
 const TodoSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -45,8 +46,14 @@ export default function Home() {
     }
   });
 
-  const [todos, setTodos] = useState<TTodo[]>(JSON.parse(localStorage.getItem("todos") || "[]"));
+  const [todos, setTodos] = useState<TTodo[]>([]);
   const [editedTodo, setEditedTodo] = useState<TTodo | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setTodos(JSON.parse(localStorage.getItem("todos") || "[]"));
+    }
+  }, [todos]);
 
   const handleState = (id: string) => {
     const currentTodo = todos.find(todo => todo.id === id)!;
